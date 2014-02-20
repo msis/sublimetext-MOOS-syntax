@@ -1,0 +1,34 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: IvP Behavior Configuration File
+scopeName: text.IvPBHVConfigFile
+fileTypes: [ bhv ]
+uuid: ad372810-2924-4522-94ec-3eab90d93822
+
+patterns:
+- include: source.c++
+
+- comment: "IvP Behavior configuration file global settings"
+  name: storage.type
+  match: '(?i)(initialize|set|Behavior)'
+
+- comment: "Behaviors declaration"
+  name: variable.parameter
+  match: 'BHV_([[:word:]]*)'
+
+- comment: "Modes declaration"
+  name: entity.name.function
+  match: 'MODE'
+
+- comment: "Behavior configuration"
+  name: entity.name.tag
+  match: '(
+  	name|
+  	priority|
+  	pwt|
+  	condition|
+  	duration|
+  	heading|
+  	speed|
+  	activeflag)'
+...
