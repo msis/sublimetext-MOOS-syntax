@@ -6,6 +6,9 @@ fileTypes: [ moos ]
 uuid: 67a2e70e-383c-4e7f-a54c-e1139e11a75b
 
 patterns:
+- include: source.c++
+- include: '#MOOSAppConf'
+
 - match: '(\$\()([[:word:]]*)(\))|(\*.*)|([[:word:]]*\*)'
   comment: "Variable and Wildcard"
   captures:
@@ -17,29 +20,23 @@ patterns:
   comment: "ProcessConfig block"
   match: '(?i)(ProcessConfig)'
 
-- name: keyword.control
+- name: storage.type
   comment: "MOOS Configuration file global settings"
-  match: '(
-  	ServerHost|
-  	ServerPort|
-  	Community|
-  	MOOSTimeWarp|
-  	LatOrigin|
-  	LongOrigin)'
+  match: '(?i)(ServerHost|ServerPort|Community|MOOSTimeWarp|LatOrigin|LongOrigin)'
 
 - name: entity.name.function
   comment: "pAntler configuration"
-  match: '(
+  match: '(?i)(
   	MSBetweenLaunches|
   	Run|
   	NewConsole|
-  	(?i)ExecutablePath|
+  	ExecutablePath|
   	ExtraProcessParams|
   	InhibitMOOSParams)'
 
 - name: entity.name.function
   comment: "iRemote configuration"
-  match: '(
+  match: '(?i)(
   	CustomJournal|
   	CustomSummary|
   	CustomKey)'
@@ -51,7 +48,7 @@ patterns:
 
 - name: entity.name.tag
   comment: "pShare configuration (IO configuration)"
-  match: '(
+  match: '(?i)(
   	src_name|
   	dest_name|
   	route)'
@@ -117,7 +114,7 @@ patterns:
 
 - name: entity.name.tag
   comment: "pMarineViewer markers configuration"
-  match: '(
+  match: '(?i)(
   	type|
   	label|
   	color|
@@ -128,11 +125,11 @@ patterns:
   	diamond|
   	efield|
   	gateway|
-  	(?i)(auv|
-  		glider|
-  		kayak|
-  		ship|
-  		uuv)
+  	auv|
+  	glider|
+  	kayak|
+  	ship|
+  	uuv\
   	polygon|
   	points|
   	pts|
@@ -162,20 +159,20 @@ patterns:
   	delay_(reset|start)|
   	event|
   	forward_var|
-  	paused(_var??)|
-  	rand_var|
+  	paused(_var)??|
+  	randvar|
   	reset_(max|time|var)|
   	script_(atomic|name)|
   	shuffle|
   	status_var|
   	time_warp|
   	upon_awake|
-  	verbose)'
+  	verbose)\b'
 
 - name: entity.name.tag
   comment: "uTimerScript variable configuration"
   match: '(?i)(
-  	var(name??)|
+  	var(name)??|
   	max|
   	min|
   	key|
@@ -183,26 +180,23 @@ patterns:
   	time)\b'
 
 - comment: "pBasicContactMgr configuration"
-  begin: '=(.*)pBasicContactMgr(.*)\n'
-  end: '^}'
-  patterns:
-  # - include: source.c++
-  - name: entity.name.function
-    match: '(?i)(
+  name: entity.name.function
+  match: '(?i)(
     	alert(_verbose)??|
     	contact_(local_coords|max_age|recap_interval)|
   		default_((alert_range(_color)??)|(cpa_range(_color)??))|
   		display_radii|
   		decay)\b'
-  - name: entity.name.tag
-    match: '(?i)(
+
+- name: entity.name.tag
+  comment: "pBasicContactMgr variable configuration"
+  match: '(?i)(
   		(alert_range(_color)??)|
   		(cpa_range(_color)??)|
   		var|
   		id|
   		val|
   		contact)\b'
-  - include: '#MOOSAppConf'
 
 - name: entity.name.function
   comment: "uProcessWatch configuration"
@@ -294,14 +288,14 @@ patterns:
 
 - name: entity.name.tag
   comment: "uFldNodeBroker variable configuration"
-  match: '(
+  match: '(?i)(
   	pshare_route|
   	src|
   	alias)\b'
 
 - name: entity.name.function
   comment: "uFldShoreBroker configuration"
-  match: '(
+  match: '(?i)(
   	bridge|
   	qbridge)'
 
@@ -321,13 +315,13 @@ patterns:
 
 - name: entity.name.function
   comment: "uFldMessageHandler configuration"
-  match: '(
-  	strict_adressing|
+  match: '(?i)(
+  	strict_addressing|
   	verbose)'
 
 - name: entity.name.function
   comment: "uFldHazardSensor configuration"
-  match: '(
+  match: '(?i)(
   	default_(benign_(color|shape|width)|hazard_(color|shape|width))|
   	hazard_file|
   	max_turn_rate|
@@ -341,20 +335,20 @@ patterns:
 
 - name: entity.name.function
   comment: "uFldHazardMgr configuration"
-  match: '(
+  match: '(?i)(
   	swath_width|
   	pd)'
 
 - name: entity.name.function
   comment: "uFldHazardMetric configuration"
-  match: '(
+  match: '(?i)(
   	penalty_(missed_hazard|false_alarm|max_time_ove(r|rage))|
   	max_time|
   	hazard_file)'
 
 - name: entity.name.function
   comment: "uFldBeaconRangeSensor configuration"
-  match: '(
+  match: '(?i)(
   	beacon|
   	default_beacon_(freq|report_range|width|color|shape)|
   	ping_(payments|wait)|
@@ -366,8 +360,10 @@ patterns:
 
 - name: entity.name.function
   comment: "uFldContactRangeSensor configuration"
-  match: '(
+  match: '(?i)(
   	allow_echo_types|
+  	echo_color|
+  	push_distance|
   	ground_true|
   	ping_(color|wait)|
   	reach_distance|
@@ -379,7 +375,7 @@ patterns:
 
 - name: entity.name.function
   comment: "uFldCollisionDetect configuration"
-  match: '(
+  match: '(?i)(
   	collision_range|
   	delay_time_to_clear|
   	deploy_delay_time|
@@ -389,21 +385,19 @@ patterns:
 
 - name: entity.name.function
   comment: "uFldScope configuration"
-  match: '(
+  match: '(?i)(
   	scope|
   	layout)'
 
 - name: entity.name.function
   comment: "uFldPathCheck configuration"
-  match: '(history)'
-
-- include: source.c++
+  match: '(?i)(history)'
 
 repository:
   MOOSAppConf:
     name: entity.name.function
     comment: "General MOOS App configuration parameters"
-    match: '(
+    match: '(?i)(
     	AppTick|
   		CommsTick)'
 ...
