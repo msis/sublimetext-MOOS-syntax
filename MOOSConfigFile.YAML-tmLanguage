@@ -1,0 +1,409 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: MOOS Configuration File
+scopeName: text.MOOSConfigFile
+fileTypes: [ moos ]
+uuid: 67a2e70e-383c-4e7f-a54c-e1139e11a75b
+
+patterns:
+- match: '(\$\()([[:word:]]*)(\))|(\*.*)|([[:word:]]*\*)'
+  comment: "Variable and Wildcard"
+  captures:
+    '2': {name: variable.parameter}
+    '4': {name: variable.parameter}
+    '5': {name: variable.parameter}
+
+- name: storage.type
+  comment: "ProcessConfig block"
+  match: '(?i)(ProcessConfig)'
+
+- name: keyword.control
+  comment: "MOOS Configuration file global settings"
+  match: '(
+  	ServerHost|
+  	ServerPort|
+  	Community|
+  	MOOSTimeWarp|
+  	LatOrigin|
+  	LongOrigin)'
+
+- name: entity.name.function
+  comment: "pAntler configuration"
+  match: '(
+  	MSBetweenLaunches|
+  	Run|
+  	NewConsole|
+  	(?i)ExecutablePath|
+  	ExtraProcessParams|
+  	InhibitMOOSParams)'
+
+- name: entity.name.function
+  comment: "iRemote configuration"
+  match: '(
+  	CustomJournal|
+  	CustomSummary|
+  	CustomKey)'
+
+
+- name: entity.name.function
+  comment: "pShare configuration (IO)"
+  match: '(?i)(output|input)'
+
+- name: entity.name.tag
+  comment: "pShare configuration (IO configuration)"
+  match: '(
+  	src_name|
+  	dest_name|
+  	route)'
+
+- name: entity.name.function
+  comment: "pLogger configuration"
+  match: '\s(?i)(
+  	file|
+  	path|
+  	synclog|
+  	asynclog|
+  	wildcardlogging|
+  	filetimestamp|
+  	log|
+  	WildCardOmitPattern|
+  	LogAuxSrc|
+  	LoggingDirectorySummaryFile)(\s)'
+
+- name: entity.name.function
+  comment: "pMarineViewer configuration"
+  match: '(?i)(
+  	action|
+  	(left|right)_context|
+  	button_(one|two|three|four)|
+  	datum_(lat|lon|viewable|color|size)|
+  	lat_(north|south)|
+  	lon_(west|east)|
+  	tiff_(file(_b)?|type|viewable)|
+  	active|
+  	msg|
+  	(vertex_|edge_)(size|color)|
+  	fill_(color|transparency)|
+  	marker|
+  	marker_(scale|viewable_all|edge_width|viewable_labels)|
+  	back_shade|
+  	full_screen|
+  	hash_(shade|viewable|delta)|
+  	log_the_image|
+  	view_center|
+  	circle_viewable_(all|labels)
+  	comms_pulse_viewable_all|
+  	drop_point_(viewable_all|coords|vertex_size)|
+  	grid_viewable_(all|labels|opaqueness)|
+  	oparea_(viewable_all|viewable_labels)|
+  	point_(viewable_all|viewable_labels)|
+  	polygon_(viewable_all|viewable_all)|
+  	range_pulse_viewable_all|
+  	seglist_(viewable_all|viewable_labels)|
+  	vector_(viewable_all|viewable_labels)|
+  	bearing_lines_viewable|
+  	center_view|
+  	stale_(remove_thresh|report_thresh)|
+  	trails_(color|connect_viewable|length|point_size|viewable)|
+  	vehicles_((in)??active_color|shape_scale|name_(mode|color|viewable)|viewable)|
+  	appcast_(color_scheme|font_size|height|viewable|width)|
+  	nodes_font_size|
+  	procs_font_size|
+  	refresh_mode|
+  	scope|
+  	oparea|
+  	(l|r)click_ix_start|
+  	zoom)'
+
+- name: entity.name.tag
+  comment: "pMarineViewer markers configuration"
+  match: '(
+  	type|
+  	label|
+  	color|
+  	width|
+  	triangle|
+  	square|
+  	circle|
+  	diamond|
+  	efield|
+  	gateway|
+  	(?i)(auv|
+  		glider|
+  		kayak|
+  		ship|
+  		uuv)
+  	polygon|
+  	points|
+  	pts|
+  	format|
+  	radius|
+  	snap|
+  	degs|
+  	major|
+  	minor|
+  	vector|
+  	xdot|
+  	ydot)\b'
+
+- name: entity.name.function
+  comment: "uHelmScope configuration"
+  match: '(?i)(
+  	behaviors_concise|
+  	display_(bhv_posts|moos_scope|virgins)
+  	paused|
+  	truncated_output|
+  	var)'
+
+- name: entity.name.function
+  comment: "uTimerScript configuration"
+  match: '(?i)(
+  	condition|
+  	delay_(reset|start)|
+  	event|
+  	forward_var|
+  	paused(_var??)|
+  	rand_var|
+  	reset_(max|time|var)|
+  	script_(atomic|name)|
+  	shuffle|
+  	status_var|
+  	time_warp|
+  	upon_awake|
+  	verbose)'
+
+- name: entity.name.tag
+  comment: "uTimerScript variable configuration"
+  match: '(?i)(
+  	var(name??)|
+  	max|
+  	min|
+  	key|
+  	val|
+  	time)\b'
+
+- comment: "pBasicContactMgr configuration"
+  begin: '=(.*)pBasicContactMgr(.*)\n'
+  end: '^}'
+  patterns:
+  # - include: source.c++
+  - name: entity.name.function
+    match: '(?i)(
+    	alert(_verbose)??|
+    	contact_(local_coords|max_age|recap_interval)|
+  		default_((alert_range(_color)??)|(cpa_range(_color)??))|
+  		display_radii|
+  		decay)\b'
+  - name: entity.name.tag
+    match: '(?i)(
+  		(alert_range(_color)??)|
+  		(cpa_range(_color)??)|
+  		var|
+  		id|
+  		val|
+  		contact)\b'
+  - include: '#MOOSAppConf'
+
+- name: entity.name.function
+  comment: "uProcessWatch configuration"
+  match: '(?i)(
+  	allow_retractions|
+  	nowatch|
+  	post_mapping|
+  	summary_wait|
+  	watch(_all)??)\b'
+
+- name: entity.name.function
+  comment: "pNodeReporter configuration"
+  match: '(?i)(
+  	alt_nav_(prefix|name) |
+  	blackout_(interval|variance) |
+  	cross_fill_policy |
+  	node_report_output|
+  	nohelm_treshold|
+  	(platform|vessel)_(type|length))'
+
+- name: entity.name.function
+  comment: "uXMS configuration"
+  match: '(?i)(
+  	colormap|
+  	content_mode|
+  	display_(all|aux_source|Community|history_var|source|time|virgins)|
+  	history_var|
+  	refresh_mode|
+  	source|
+  	term_report_interval|
+  	trunc_data|
+  	var)'
+
+- name: entity.name.function
+  comment: "uSimMarine configuration"
+  match: '(?i)(
+  	max_depth_rate(_speed)??|
+  	buoyancy_rate|
+  	current_(field(_active)??)|
+  	default_water_depth|
+  	drift_(vector|x|y)|
+  	rotate_speed|
+  	prefix|
+  	sim_pause|
+  	start_(depth|heading|pos|speed|x|y)|
+  	thrust_(factor|map|reflect)|
+  	turn_(loss|rate))'
+
+- name: entity.name.function
+  comment: "pHostInfo configuration"
+  match: '(?i)(
+  	temp_file_dir|
+  	default_hostip(_force)??)'
+
+- name: entity.name.function
+  comment: "pEchoVar configuration"
+  match: '(?i)(
+  	echo(_latest_only)??|
+  	condition|
+  	flip|
+  	hold_messages)'
+
+- name: entity.name.function
+  comment: "pSearchGrid configuration"
+  match: '(?i)(grid_config)'
+
+- name: entity.name.function
+  comment: "uTermCommand configuration"
+  match: '(?i)cmd'
+
+- name: entity.name.function
+  comment: "uSimCurrent configuration"
+  match: '(?i)(current_field(_active)??)'
+
+- name: entity.name.function
+  comment: "uMACView configuration"
+  match: '(?i)(
+  	nodes_font_size|
+  	procs_font_size|
+  	appcast_(font_size|color_scheme|height)|
+  	refresh_mode)'
+
+- name: entity.name.function
+  comment: "uFldNodeBroker configuration"
+  match: '(?i)(
+  	keyword|
+  	bridge|
+  	try_shore_host)'
+
+- name: entity.name.tag
+  comment: "uFldNodeBroker variable configuration"
+  match: '(
+  	pshare_route|
+  	src|
+  	alias)\b'
+
+- name: entity.name.function
+  comment: "uFldShoreBroker configuration"
+  match: '(
+  	bridge|
+  	qbridge)'
+
+- name: entity.name.function
+  comment: "uFldNodeComms configuration"
+  match: '(?i)(
+  	(comms|critical)_range|
+  	debug|
+  	earange|
+  	groups|
+  	min_msg_interval|
+  	max_msg_length|
+  	stealth|
+  	stale_time|
+  	verbose|
+  	view_node_rpt_pulses)'
+
+- name: entity.name.function
+  comment: "uFldMessageHandler configuration"
+  match: '(
+  	strict_adressing|
+  	verbose)'
+
+- name: entity.name.function
+  comment: "uFldHazardSensor configuration"
+  match: '(
+  	default_(benign_(color|shape|width)|hazard_(color|shape|width))|
+  	hazard_file|
+  	max_turn_rate|
+  	min_classify_interval|
+  	min_reset_interval|
+  	options_summary_interval|
+  	seed_random|
+  	sensor_config|
+  	show_(detections|hazards|pd|pfa|swath)|
+  	swath_(transparency|length))'
+
+- name: entity.name.function
+  comment: "uFldHazardMgr configuration"
+  match: '(
+  	swath_width|
+  	pd)'
+
+- name: entity.name.function
+  comment: "uFldHazardMetric configuration"
+  match: '(
+  	penalty_(missed_hazard|false_alarm|max_time_ove(r|rage))|
+  	max_time|
+  	hazard_file)'
+
+- name: entity.name.function
+  comment: "uFldBeaconRangeSensor configuration"
+  match: '(
+  	beacon|
+  	default_beacon_(freq|report_range|width|color|shape)|
+  	ping_(payments|wait)|
+  	ground_truth|
+  	reach_distance|
+  	report_vars|
+  	rm_algorithm|
+  	verbose)'
+
+- name: entity.name.function
+  comment: "uFldContactRangeSensor configuration"
+  match: '(
+  	allow_echo_types|
+  	ground_true|
+  	ping_(color|wait)|
+  	reach_distance|
+  	reply_(distance|color)|
+  	exponential_decay|
+  	sensor_arcs|
+  	rn_algorithm|
+  	report_vars)'
+
+- name: entity.name.function
+  comment: "uFldCollisionDetect configuration"
+  match: '(
+  	collision_range|
+  	delay_time_to_clear|
+  	deploy_delay_time|
+  	pulse|
+  	pulse_(range|duration)|
+  	publish_(immediately|pairs|single))'
+
+- name: entity.name.function
+  comment: "uFldScope configuration"
+  match: '(
+  	scope|
+  	layout)'
+
+- name: entity.name.function
+  comment: "uFldPathCheck configuration"
+  match: '(history)'
+
+- include: source.c++
+
+repository:
+  MOOSAppConf:
+    name: entity.name.function
+    comment: "General MOOS App configuration parameters"
+    match: '(
+    	AppTick|
+  		CommsTick)'
+...
