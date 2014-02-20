@@ -9,12 +9,15 @@ patterns:
 - include: source.c++
 - include: '#MOOSAppConf'
 
-- match: '(\$\()([[:word:]]*)(\))|(\*.*)|([[:word:]]*\*)'
+- match: '(\$\()([[:word:]]*)(\))|(\*)(.*)|([[:word:]]*\*)|(\%\()([[:word:]]*)(\))'
   comment: "Variable and Wildcard"
   captures:
     '2': {name: variable.parameter}
-    '4': {name: variable.parameter}
     '5': {name: variable.parameter}
+    '6': {name: variable.parameter}
+    '8': {name: variable.parameter}
+
+
 
 - name: storage.type
   comment: "ProcessConfig block"
@@ -147,7 +150,7 @@ patterns:
   comment: "uHelmScope configuration"
   match: '(?i)(
   	behaviors_concise|
-  	display_(bhv_posts|moos_scope|virgins)
+  	display_(bhv_posts|moos_scope|virgins)|
   	paused|
   	truncated_output|
   	var)'
@@ -159,6 +162,7 @@ patterns:
   	delay_(reset|start)|
   	event|
   	forward_var|
+  	varname|
   	paused(_var)??|
   	randvar|
   	reset_(max|time|var)|
@@ -392,6 +396,22 @@ patterns:
 - name: entity.name.function
   comment: "uFldPathCheck configuration"
   match: '(?i)(history)'
+
+- name: entity.name.function
+  comment: "pHelmIvP configuration"
+  match: "(?i)(
+  	domain|
+  	behaviors|
+  	verbose)"
+
+- name: entity.name.function
+  comment: "pMarinePID configuration"
+  match: '(?i)(
+  	depth_control|
+  	active_start|
+  	(yaw|speed|z_to_pitch|pitch)_pid_(k(p|i|d)|integral_limit)|
+  	max(pitch|elevator|rudder|thrust)|
+  	speed_factor)'
 
 repository:
   MOOSAppConf:
