@@ -7,3 +7,4 @@ Sumblime Text Highlighting for [`MOOS`](http://themoos.org) and [`MOOS-IvP`](htt
 3. Browse up to `Installed Packages`
 4. Copy the `MOOSIvP.sublime-package` into `Installed Packeges`
 5. Restart `Sublime Text`
+
