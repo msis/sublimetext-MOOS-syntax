@@ -25,10 +25,13 @@ patterns:
   match: '(
   	name|
   	priority|
-  	pwt|
+  	duration(_(status|reset|idle_decay))??|
+  	post_mapping|
   	condition|
-  	duration|
-  	heading|
-  	speed|
-  	activeflag)'
+  	pwt|
+  	updates|
+  	nostrave|
+  	perpetual|
+  	templating|
+  	(active|run|idle|end)flag)'
 ...

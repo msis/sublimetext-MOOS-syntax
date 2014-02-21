@@ -400,8 +400,14 @@ patterns:
 - name: entity.name.function
   comment: "pHelmIvP configuration"
   match: "(?i)(
+    allow_park|
+    community|
   	domain|
-  	behaviors|
+  	behavior(s|_dir)|
+    park_on_allstop|
+    ok_skew|
+    other_override_var|
+    start_in_drive|
   	verbose)"
 
 - name: entity.name.function
