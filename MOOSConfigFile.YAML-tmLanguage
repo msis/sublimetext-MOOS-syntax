@@ -25,7 +25,7 @@ patterns:
 
 - name: storage.type
   comment: "MOOS Configuration file global settings"
-  match: '(?i)(ServerHost|ServerPort|Community|MOOSTimeWarp|LatOrigin|LongOrigin)'
+  match: '(?i)(ServerHost|ServerPort|Community|MOOSTimeWarp|LatOrigin|LongOrigin|simulator)'
 
 - name: entity.name.function
   comment: "pAntler configuration"
@@ -105,7 +105,7 @@ patterns:
   	center_view|
   	stale_(remove_thresh|report_thresh)|
   	trails_(color|connect_viewable|length|point_size|viewable)|
-  	vehicles_((in)??active_color|shape_scale|name_(mode|color|viewable)|viewable)|
+  	vehicle((s)??)_((in)??active_color|shape_scale|name_(mode|color|viewable)|viewable)|
   	appcast_(color_scheme|font_size|height|viewable|width)|
   	nodes_font_size|
   	procs_font_size|
@@ -113,6 +113,7 @@ patterns:
   	scope|
   	oparea|
   	(l|r)click_ix_start|
+    set_pan_(x|y)|
   	zoom)'
 
 - name: entity.name.tag
