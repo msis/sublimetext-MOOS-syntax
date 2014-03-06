@@ -2,7 +2,7 @@
 ---
 name: MOOS Configuration File
 scopeName: text.MOOSConfigFile
-fileTypes: [ moos ]
+fileTypes: [ 'moos' , '_moos' ]
 uuid: 67a2e70e-383c-4e7f-a54c-e1139e11a75b
 
 patterns:
@@ -17,7 +17,9 @@ patterns:
     '6': {name: variable.parameter}
     '8': {name: variable.parameter}
 
-
+- name: comment.line
+  comment: "nsplug comment section"
+  match: '(#)(.*)'
 
 - name: storage.type
   comment: "ProcessConfig block"

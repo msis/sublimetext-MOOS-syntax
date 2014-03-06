@@ -1,0 +1,10 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: Synchronous MOOS Log File
+scopeName: text.SlogMOOSFile
+fileTypes: [ 'slog' ]
+uuid: bb5a478d-426b-490f-b363-3fb38b868238
+
+patterns:
+- include: source.matlab
+...

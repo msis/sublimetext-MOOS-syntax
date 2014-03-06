@@ -1,0 +1,20 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: Asynchronous MOOS Log File
+scopeName: text.AlogMOOSFile
+fileTypes: ['alog','ylog']
+uuid: d2eab53c-2bd3-43ca-a611-90fafbdcf00c
+
+patterns:
+- match: '^([[:digit:]]*\.[[:digit:]]*)(\s*)([[:word:]]*)(\s*)(([[:word:]]*)(:[[:word:]]*(:[[:word:]]*)?)?)(\s*)(.*)'
+  comment: "Variable and Wildcard"
+  captures:
+    '1': {name: constant.numeric}
+    '3': {name: variable.parameter}
+    '5': {name: storage.type}
+    '10' : {name: string.quoted}
+
+- name: comment.line
+  comment: "Comment Line"
+  match: '(%%)(.*)'
+...

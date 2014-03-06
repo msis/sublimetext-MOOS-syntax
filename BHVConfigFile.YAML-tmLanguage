@@ -2,7 +2,7 @@
 ---
 name: IvP Behavior Configuration File
 scopeName: text.IvPBHVConfigFile
-fileTypes: [ bhv ]
+fileTypes: [ 'bhv' , '_bhv' ]
 uuid: ad372810-2924-4522-94ec-3eab90d93822
 
 patterns:
