@@ -21,30 +21,102 @@ patterns:
   comment: "nsplug comment section"
   match: '(#)(.*)'
 
-- name: storage.type
-  comment: "ProcessConfig block"
-  match: '(?i)(ProcessConfig)'
 
 - name: storage.type
   comment: "MOOS Configuration file global settings"
   match: '(?i)(ServerHost|ServerPort|Community|MOOSTimeWarp|LatOrigin|LongOrigin|simulator)'
 
-- name: entity.name.function
-  comment: "pAntler configuration"
-  match: '(?i)(
-  	MSBetweenLaunches|
-  	Run|
-  	NewConsole|
-  	ExecutablePath|
-  	ExtraProcessParams|
-  	InhibitMOOSParams)'
+- comment: "pAntler matchings"
+  include: source.c.comment
+  begin: '(?i)(ProcessConfig)(\s*)(=)(\s*)(ANTLER)'
+  beginCaptures:
+    '1': {name: storage.type}
+    '5': {name: storage.modifier}
+  end: (\})
+  patterns:
+  - match: '(?i)(
+      MSBetweenLaunches|
+      Run|
+      NewConsole|
+      ExecutablePath|
+      ExtraProcessParams|
+      InhibitMOOSParams)(\s*)(=)(\s*)([[:word:]]*)'
+    captures:
+      '1': {name: entity.name.function}
+      '5': {name: constant.numeric}
 
-- name: entity.name.function
-  comment: "iRemote configuration"
-  match: '(?i)(
-  	CustomJournal|
-  	CustomSummary|
-  	CustomKey)'
+
+- comment: "uTimerScript configuration"
+  begin: '(?i)(ProcessConfig)(\s*)(=)(\s*)(uTimerScript)'
+  beginCaptures:
+    '1': {name: storage.type}
+    '5': {name: storage.modifier}
+  end: (\})
+  patterns:
+  - begin: '(?i)(
+      AppTick|CommsTick|
+      event|
+      paused(_var)??|
+      reset_(max|time|var)|
+      delay_(reset|start)|
+      condition|
+      forward_var|
+      rand(_?)var|
+      script_(atomic|name)|
+      shuffle|
+      status_var|
+      time_(warp|zero)|
+      upon_awake|
+      verbose)(\s*)(=)(\s*)' #\b
+    beginCaptures:
+      '1': {name: entity.name.function}
+    end: $
+    patterns:
+    - match: '(?i)(
+        max|
+        min|
+        key|
+        va(l|r(name)??)|
+        time)\b\s*=\s*("?\S*\b\}?"?),?'
+      captures:
+        '1': {name: storage.type}
+        '4': {name: storage.modifier} 
+#TODO: Fix a bug with var & varname.
+
+- comment: "iRemote matchings"
+  include: source.c.comment
+  begin: '(?i)(ProcessConfig)(\s*)(=)(\s*)(iRemote)'
+  beginCaptures:
+    '1': {name: storage.type}
+    '5': {name: storage.modifier}
+  end: (\})
+  patterns:
+  - match: '(?i)(
+      AppTick|CommsTick|
+      CustomJournal|
+      CustomSummary|
+      CustomKey)(\s*)(=)(\s*)([[:word:]]*)'
+    captures:
+      '1': {name: entity.name.function}
+      '5': {name: constant.numeric}
+
+
+- comment: "pShare matchings"
+  include: source.c.comment
+  begin: '(?i)(ProcessConfig)(\s*)(=)(\s*)(pShare)'
+  beginCaptures:
+    '1': {name: storage.type}
+    '5': {name: storage.modifier}
+  end: (\})
+  patterns:
+  - match: '(?i)(
+      AppTick|CommsTick|
+      input|
+      output
+      )(\s*)(=)(\s*)([[:word:]]*)'
+    captures:
+      '1': {name: entity.name.function}
+      '5': {name: constant.numeric}
 
 
 - name: entity.name.function
@@ -158,33 +230,6 @@ patterns:
   	truncated_output|
   	var)'
 
-- name: entity.name.function
-  comment: "uTimerScript configuration"
-  match: '(?i)(
-  	condition|
-  	delay_(reset|start)|
-  	event|
-  	forward_var|
-  	varname|
-  	paused(_var)??|
-  	randvar|
-  	reset_(max|time|var)|
-  	script_(atomic|name)|
-  	shuffle|
-  	status_var|
-  	time_warp|
-  	upon_awake|
-  	verbose)\b'
-
-- name: entity.name.tag
-  comment: "uTimerScript variable configuration"
-  match: '(?i)(
-  	var(name)??|
-  	max|
-  	min|
-  	key|
-  	val|
-  	time)\b'
 
 - comment: "pBasicContactMgr configuration"
   name: entity.name.function
